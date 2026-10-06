@@ -6,11 +6,9 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
@@ -22,6 +20,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import uz.ttpu.composearchlab.ui.signin.SignInRoute
 import uz.ttpu.composearchlab.ui.theme.ComposeArchLabTheme
 
 class MainActivity : ComponentActivity() {
@@ -30,10 +29,9 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             ComposeArchLabTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    // NameScreen(modifier = Modifier.padding(innerPadding))   // task 2 and 3
-                    NewsScreen(modifier = Modifier.padding(innerPadding))
-                }
+                // NameScreen()   // task 2 and 3
+                // NewsScreen()   // task 4
+                SignInRoute()
             }
         }
     }
