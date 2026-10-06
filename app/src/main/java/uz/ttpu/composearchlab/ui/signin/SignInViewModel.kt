@@ -28,4 +28,10 @@ class SignInViewModel : ViewModel() {
             }
         }
     }
+
+    fun onErrorShown() {
+        if (_uiState.value is SignInUiState.Error) {
+            _uiState.value = SignInUiState.SignedOut
+        }
+    }
 }

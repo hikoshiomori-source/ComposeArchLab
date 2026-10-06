@@ -73,9 +73,11 @@ fun SignInRoute() {
 
     // task 8: after rotation the snackbar came back again, because the ViewModel did not
     // die and the state was still Error, so this effect started one more time
+    // task 9: onErrorShown() makes the state SignedOut again, so the message is shown once
     LaunchedEffect(uiState) {
         if (uiState is SignInUiState.Error) {
             snackbarHostState.showSnackbar(uiState.message)
+            viewModel.onErrorShown()
         }
     }
 
