@@ -1,5 +1,6 @@
 package uz.ttpu.composearchlab.ui.taste
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -38,6 +39,8 @@ fun GenreChips(
     }
 }
 
+// task 14, Layout Inspector: when I like one more artist, the screen, the chips, the grid
+// and the bottom bar recompose, and only the card I tapped, the other cards are skipped
 @Composable
 fun TastePickerScreen(
     state: TastePickerState,
@@ -45,7 +48,18 @@ fun TastePickerScreen(
     onLikeClick: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Scaffold(modifier = modifier) { innerPadding ->
+    Scaffold(
+        modifier = modifier,
+        bottomBar = {
+            TastePickerBottomBar(
+                likedCount = state.likedCount,
+                required = REQUIRED_LIKES,
+                canContinue = state.canContinue,
+                onContinueClick = { Log.d("TastePicker", "Continue clicked") },
+                onSkipClick = { Log.d("TastePicker", "Later clicked") }
+            )
+        }
+    ) { innerPadding ->
         Column(
             modifier = Modifier.padding(innerPadding),
             verticalArrangement = Arrangement.spacedBy(8.dp)
