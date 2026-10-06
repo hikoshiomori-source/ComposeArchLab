@@ -16,6 +16,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import uz.ttpu.composearchlab.ui.theme.ComposeArchLabTheme
 
@@ -34,16 +35,32 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
+fun NameField(
+    name: String,
+    onNameChange: (String) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    OutlinedTextField(
+        value = name,
+        onValueChange = onNameChange,
+        label = { Text("Name") },
+        modifier = modifier
+    )
+}
+
+@Composable
 fun NameScreen(modifier: Modifier = Modifier) {
     // rememberSaveable puts the text in a Bundle, so after rotation it is still here
     var name by rememberSaveable { mutableStateOf("") }
 
     Column(modifier.padding(24.dp)) {
-        OutlinedTextField(
-            value = name,
-            onValueChange = { name = it },
-            label = { Text("Name") }
-        )
+        NameField(name = name, onNameChange = { name = it })
         Text("Hello, $name!")
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun NameFieldPreview() {
+    NameField(name = "Amin", onNameChange = {})
 }
