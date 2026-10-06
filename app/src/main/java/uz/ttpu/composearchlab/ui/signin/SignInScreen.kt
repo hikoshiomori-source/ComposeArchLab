@@ -7,10 +7,14 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -65,8 +69,17 @@ fun SignInScreen(
 fun SignInRoute() {
     val viewModel: SignInViewModel = viewModel()
     val uiState = viewModel.uiState.value
+    val snackbarHostState = remember { SnackbarHostState() }
 
-    Scaffold { innerPadding ->
+    // task 8: after rotation the snackbar came back again, because the ViewModel did not
+    // die and the state was still Error, so this effect started one more time
+    LaunchedEffect(uiState) {
+        if (uiState is SignInUiState.Error) {
+            snackbarHostState.showSnackbar(uiState.message)
+        }
+    }
+
+    Scaffold(snackbarHost = { SnackbarHost(snackbarHostState) }) { innerPadding ->
         SignInScreen(uiState, viewModel::onSignIn, Modifier.padding(innerPadding))
     }
 }
